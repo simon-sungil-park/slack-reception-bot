@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
@@ -5,10 +6,7 @@ const router = express.Router();
 const WebSocket = require('ws');
 const Slack = require('slack');
 const bodyParser = require('body-parser');
-
-//process.env.SLACK_BOT_TOKEN='xoxb-329163495858-0j4BiBV7v3XEdfoJV5u238YG';
 const token = process.env.SLACK_BOT_TOKEN
-
 const slackBot = new Slack({token})
 
 
@@ -34,7 +32,7 @@ app.get('/bot/users/', (req, res) => {
       })
     })
     .catch(err => {
-      res.statusCode(500).json({ok: false, msg: 'Internal Error'});
+      res.status(500).json({ok: false, msg: 'Internal Error'});
     })
 })
 
@@ -50,7 +48,7 @@ app.post('/bot/messages/', (req, res) => {
       res.json({ok: true});
     })
     .catch( err => {
-      res.statusCode(500).json({ok: false, msg: 'Internal Error'});
+      res.status(500).json({ok: false, msg: 'Internal Error'});
     })
 })
 
