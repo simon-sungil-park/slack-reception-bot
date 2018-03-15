@@ -6,9 +6,11 @@ const router = express.Router();
 const WebSocket = require('ws');
 const Slack = require('slack');
 const bodyParser = require('body-parser');
+
 const token = process.env.SLACK_BOT_TOKEN
 const slackBot = new Slack({token})
 
+app.use(express.static(__dirname+'/public'));
 
 app.use(bodyParser.json());
 
@@ -51,6 +53,12 @@ app.post('/bot/messages/', (req, res) => {
       res.status(500).json({ok: false, msg: 'Internal Error'});
     })
 })
+
+
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+})
+
 
 // start server
 app.listen(port, function (req, res) {
